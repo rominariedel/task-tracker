@@ -37,15 +37,17 @@ class TaskColumn extends React.Component {
   };
 
   render() {
-    const { onTaskCreate, onTaskDelete, status, statusLabel, tasks } = {
+    const { estimateSum, onTaskCreate, onTaskDelete, statusLabel, tasks } = {
       ...this.props
     };
 
     return (
       <div>
         <div className="Column">
-          <div className="ColumnTitle">{statusLabel}</div>
-          <div className="Elements">
+          <div className="ColumnTitle">
+            {statusLabel}: {estimateSum}hs
+          </div>
+          <div>
             {tasks.map(task => {
               return (
                 <div
@@ -57,7 +59,9 @@ class TaskColumn extends React.Component {
                 </div>
               );
             })}
-            <div onClick={this.onAddTask}>Add Task</div>
+            <div className="NewTask" onClick={this.onAddTask}>
+              + New Task
+            </div>
           </div>
         </div>
         {this.state.showTask && (

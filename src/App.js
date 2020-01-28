@@ -20,7 +20,7 @@ export default class App extends React.Component {
       this.setState({ tasks });
     });
   }
-  // add styled-components and prop-types
+  // TODO: add styled-components and prop-types
   onTaskUpdate = changedTask => {
     let unchangedTasks = this.state.tasks.filter(
       task => task.id !== changedTask.id
@@ -36,6 +36,7 @@ export default class App extends React.Component {
       newTask.id = Math.ceil(Math.random() * 100);
       this.setState({ tasks: [...this.state.tasks, newTask] });
     });
+    // TODO: add catch and message error for each request
   };
 
   onTaskDelete = deletedTask => {
@@ -46,10 +47,17 @@ export default class App extends React.Component {
     });
   };
 
-  tasksWithState = taskStatus => {
+  tasksWithStatus = taskStatus => {
     return this.state.tasks.filter(task => {
       return task.status === taskStatus;
     });
+  };
+
+  estimateSum = taskStatus => {
+    let tasks = this.tasksWithStatus(taskStatus);
+    return tasks.reduce((total, task) => {
+      return total + parseInt(task.estimate);
+    }, 0);
   };
 
   render() {
@@ -60,13 +68,14 @@ export default class App extends React.Component {
           {taskStatuses.map(taskStatus => {
             return (
               <TaskColumn
+                estimateSum={this.estimateSum(taskStatus.order)}
                 key={taskStatus.order}
                 onTaskCreate={this.onTaskCreate}
                 onTaskDelete={this.onTaskDelete}
                 onTaskUpdate={this.onTaskUpdate}
                 status={taskStatus.order}
                 statusLabel={taskStatus.label}
-                tasks={this.tasksWithState(taskStatus.order)}
+                tasks={this.tasksWithStatus(taskStatus.order)}
               />
             );
           })}

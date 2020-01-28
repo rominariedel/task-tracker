@@ -25,7 +25,8 @@ export const ViewTask = ({
     <div className="TaskWrapper">
       <div className="Task">
         <div className="TaskHeader">
-          <input
+          <textarea
+            className="Title"
             onChange={e => onChangeTaskVal({ name: e.target.value })}
             value={task.name || ""}
           />
@@ -34,30 +35,58 @@ export const ViewTask = ({
           </div>
         </div>
         <div className="TaskBody">
-          <div className="Description">
-            Description
-            <textarea
-              className="DescriptionContent"
-              onChange={e => onChangeTaskVal({ description: e.target.value })}
-              value={task.description}
-            />
+          <div className="TaskLine">
+            <div className="PropertyWrapper">
+              <div className="BodyTitle">Description</div>
+              <textarea
+                className="DescriptionContent"
+                onChange={e => onChangeTaskVal({ description: e.target.value })}
+                value={task.description}
+              />
+            </div>
           </div>
-          <div className="State">
-            <Select
-              getOptionValue={option => option.order}
-              onChange={val => onChangeTaskVal({ status: val.order })}
-              options={taskStatuses}
-              value={currentState}
-            />
+          <div className="TaskLine">
+            <div className="PropertyWrapper">
+              <div className="BodyTitle">Status</div>
+              <Select
+                className="PropertyValue"
+                getOptionValue={option => option.order}
+                onChange={val => onChangeTaskVal({ status: val.order })}
+                options={taskStatuses}
+                value={currentState}
+              />
+            </div>
+            <div className="PropertyWrapper">
+              <div className="BodyTitle">Estimate (hs)</div>
+              <input
+                className="PropertyValue"
+                type="number"
+                min="1"
+                onChange={e => onChangeTaskVal({ estimate: e.target.value })}
+                value={task.estimate}
+              />
+            </div>
           </div>
           {task.id && (
-            <div>
-              <div onClick={() => onSave(onDelete, task)}>Delete Task</div>
-              <div onClick={() => onSave(onUpdate, task)}>Save Task</div>
+            <div className="TaskLine">
+              <div
+                className="Action Delete"
+                onClick={() => onSave(onDelete, task)}
+              >
+                Delete Task
+              </div>
+              <div
+                className="Action Save"
+                onClick={() => onSave(onUpdate, task)}
+              >
+                Save Task
+              </div>
             </div>
           )}
           {!task.id && (
-            <div onClick={() => onSave(onCreate, task)}>Create Task</div>
+            <div className="Action Save" onClick={() => onSave(onCreate, task)}>
+              Create Task
+            </div>
           )}
         </div>
       </div>

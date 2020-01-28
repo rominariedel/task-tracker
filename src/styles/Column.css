@@ -1,23 +1,39 @@
 .Column {
+  background-color: rgb(244, 245, 247);
+  border-radius: 6px;
+  color: rgb(94, 108, 132);
+  font-size: 14px;
   margin: 0 15px;
   padding: 10px;
-  border-radius: 6px;
-  background-color: rgb(244, 245, 247);
+  width: 272px;
 }
 
 .ColumnTitle {
-  text-transform: uppercase;
-  font-weight: 500;
-  color: rgb(94, 108, 132);
   font-size: 12px;
+  font-weight: 500;
   margin: 0 0 10px 0;
+  text-transform: uppercase;
 }
 
 .ColumnTask {
-  padding: 12px;
   background-color: white;
   border-radius: 6px;
-  margin: 10px 0;
-  font-size: 14px;
+  color: black;
   cursor: pointer;
+  margin: 10px 0;
+  padding: 12px;
+}
+
+.ColumnTask:hover {
+  background-color: #eaebed;
+}
+
+.NewTask {
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.NewTask:hover {
+  background-color: #eaebed;
 }

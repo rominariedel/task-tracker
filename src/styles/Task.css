@@ -1,21 +1,48 @@
 .TaskWrapper {
+  background: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  left: 0;
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
 }
 
 .Task {
-  position: fixed;
-  background: white;
-  width: 80%;
-  padding: 20px;
+  background: #f4f5f7;
   height: auto;
-  top: 50%;
   left: 50%;
+  margin: 15px;
+  padding: 20px 20px 20px 30px;
+  position: fixed;
+  top: 50%;
   transform: translate(-50%, -50%);
+  width: 80%;
+}
+
+.Title {
+  font-size: 20px;
+  font-weight: 600;
+  height: 32px;
+  height: 34px;
+  padding: 4px 8px;
+  width: 410px;
+}
+
+textarea,
+input {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  resize: none;
+}
+
+textarea:focus,
+input:focus {
+  background: white;
+  border: none;
+  box-shadow: inset 0 0 0 1px #0079bf;
+  cursor: text;
+  outline: none;
 }
 
 .display-none {
@@ -32,7 +59,61 @@
 
 .TaskHeader {
   display: flex;
-  justify-content: space-between;
   font-size: 27px;
   font-weight: bold;
+  justify-content: space-between;
+}
+
+.PropertyWrapper {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 15px 0;
+  width: 100%;
+}
+
+.BodyTitle {
+  color: #172b4d;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.DescriptionContent {
+  font-size: 14px;
+  height: 60px;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.TaskLine {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.PropertyValue {
+  font-size: 14px;
+  height: 100%;
+  margin: 10px 0;
+  width: 90%;
+}
+
+.Action {
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 30px;
+  padding: 10px 0;
+  width: 50%;
+}
+
+.Save {
+  background-color: #026aa7;
+}
+
+.Delete {
+  background-color: #b03535;
 }
