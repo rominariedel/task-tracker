@@ -5,32 +5,71 @@ import "../styles/Column.css";
 class TaskColumn extends React.Component {
   state = { showTask: false, task: {} };
 
-  viewTask = task => {
+  emptyTask = {
+    name: "New task",
+    estimate: 1,
+    description: "",
+    status: this.props.status
+  };
+
+  onViewTask = task => {
     this.setState({ showTask: true, task: task });
   };
 
+  onCloseTask = () => {
+    this.setState({ showTask: false, task: {} });
+  };
+
+  onAddTask = () => {
+    this.setState({ showTask: true, task: Object.assign({}, this.emptyTask) });
+  };
+
+  onChangeTaskVal = changedProps => {
+    this.setState({
+      ...this.state,
+      task: { ...this.state.task, ...changedProps }
+    });
+  };
+
+  onTaskUpdate = changedProps => {
+    this.onChangeTaskVal(changedProps);
+    this.props.onTaskUpdate(this.state.task);
+  };
+
   render() {
-    const props = { ...this.props };
+    const { onTaskCreate, onTaskDelete, status, statusLabel, tasks } = {
+      ...this.props
+    };
 
     return (
       <div>
         <div className="Column">
-          <div className="ColumnTitle">{props.state}</div>
+          <div className="ColumnTitle">{statusLabel}</div>
           <div className="Elements">
-            {props.tasks.map(task => {
+            {tasks.map(task => {
               return (
                 <div
                   className="ColumnTask"
                   key={task.id}
-                  onClick={e => this.viewTask(task)}
+                  onClick={e => this.onViewTask(task)}
                 >
                   {task.name}
                 </div>
               );
             })}
+            <div onClick={this.onAddTask}>Add Task</div>
           </div>
         </div>
-        <ViewTask show={this.state.showTask} task={this.state.task} />
+        {this.state.showTask && (
+          <ViewTask
+            onChangeTaskVal={this.onChangeTaskVal}
+            onCloseTask={this.onCloseTask}
+            onCreate={onTaskCreate}
+            onDelete={onTaskDelete}
+            onUpdate={this.onTaskUpdate}
+            task={this.state.task}
+          />
+        )}
       </div>
     );
   }

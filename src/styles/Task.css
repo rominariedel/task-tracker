@@ -11,6 +11,7 @@
   position: fixed;
   background: white;
   width: 80%;
+  padding: 20px;
   height: auto;
   top: 50%;
   left: 50%;
@@ -23,4 +24,15 @@
 
 .display-block {
   display: block;
+}
+
+.closeButton {
+  cursor: pointer;
+}
+
+.TaskHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 27px;
+  font-weight: bold;
 }

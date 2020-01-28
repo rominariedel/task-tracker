@@ -1,7 +1,12 @@
 import React from "react";
 import TaskColumn from "./components/taskColumn";
-import logo from "./logo.svg";
-import { getTasks } from "./services/tasksService.js";
+import {
+  createTask,
+  deleteTask,
+  getTasks,
+  updateTask
+} from "./services/tasksService";
+import taskStatuses from "./taskStatuses";
 import "./styles/App.css";
 import "./styles/Board.css";
 
@@ -15,15 +20,56 @@ export default class App extends React.Component {
       this.setState({ tasks });
     });
   }
+  // add styled-components and prop-types
+  onTaskUpdate = changedTask => {
+    let unchangedTasks = this.state.tasks.filter(
+      task => task.id !== changedTask.id
+    );
+    updateTask({ id: changedTask.id, task: changedTask }).then(() => {
+      this.setState({ tasks: [...unchangedTasks, changedTask] });
+    });
+  };
+
+  onTaskCreate = newTask => {
+    createTask(newTask).then(() => {
+      // Generating a random id for task creation mock
+      newTask.id = Math.ceil(Math.random() * 100);
+      this.setState({ tasks: [...this.state.tasks, newTask] });
+    });
+  };
+
+  onTaskDelete = deletedTask => {
+    deleteTask(deletedTask.id).then(() => {
+      this.setState({
+        tasks: this.state.tasks.filter(task => task.id !== deletedTask.id)
+      });
+    });
+  };
+
+  tasksWithState = taskStatus => {
+    return this.state.tasks.filter(task => {
+      return task.status === taskStatus;
+    });
+  };
 
   render() {
     return (
       <div className="App">
         <h1>Task tracker</h1>
         <div className="Board">
-          <TaskColumn state="planned" tasks={this.state.tasks} />
-          <TaskColumn state="in progress" tasks={this.state.tasks} />
-          <TaskColumn state="completed" tasks={this.state.tasks} />
+          {taskStatuses.map(taskStatus => {
+            return (
+              <TaskColumn
+                key={taskStatus.order}
+                onTaskCreate={this.onTaskCreate}
+                onTaskDelete={this.onTaskDelete}
+                onTaskUpdate={this.onTaskUpdate}
+                status={taskStatus.order}
+                statusLabel={taskStatus.label}
+                tasks={this.tasksWithState(taskStatus.order)}
+              />
+            );
+          })}
         </div>
       </div>
     );
