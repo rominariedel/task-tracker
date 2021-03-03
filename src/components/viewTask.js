@@ -1,10 +1,10 @@
-import React from "react";
 import "../styles/Task.css";
-import taskStatuses from "../taskStatuses";
-import Select from "react-select";
 
-export const ViewTask = ({
-  onChangeState,
+import React from "react";
+import Select from "react-select";
+import taskStatuses from "../taskStatuses";
+
+const ViewTask = ({
   onChangeTaskVal,
   onCloseTask,
   onCreate,
@@ -12,7 +12,7 @@ export const ViewTask = ({
   onUpdate,
   task
 }) => {
-  let currentState = taskStatuses.find(
+  const currentState = taskStatuses.find(
     taskStatus => taskStatus.order === task.status
   );
 

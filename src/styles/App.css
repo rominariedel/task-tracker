@@ -1,3 +1,23 @@
 .App {
   text-align: center;
 }
+
+.AppHeader {
+  width: 100%;
+  margin: 0;
+  padding: 10px 30px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: left;
+  background-color: #3B5254;
+  color: white;
+}
+
+.AppBody {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  margin-top: 58px;
+  padding-top: 25px;
+}
