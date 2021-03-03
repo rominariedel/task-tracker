@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "name": "Mock API",
+    "status": 0,
+    "estimate": 1,
+    "description": "Mock task tracker API using Apiary."
+  },
+  {
+    "id": 2,
+    "name": "Generate general app state",
+    "status": 2,
+    "estimate": 4,
+    "description": "Generate app state to save the tasks."
+  },
+  {
+    "id": 3,
+    "name": "Add styles to viewTask",
+    "status": 1,
+    "estimate": 2,
+    "description":
+      "Add styles to viewTask with the different tasks properties and actions."
+  },
+  {
+    "id": 4,
+    "name": "Tasks ABM",
+    "status": 0,
+    "estimate": 8,
+    "description": "Generate tasks actions for update, create and destroy."
+  },
+  {
+    "id": 5,
+    "name": "Complete README",
+    "status": 1,
+    "estimate": 2,
+    "description":
+      "Complete app readme to explain which components are used and for what purposes."
+  }
+]

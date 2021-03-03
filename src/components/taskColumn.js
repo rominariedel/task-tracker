@@ -1,82 +1,92 @@
-import React from "react";
-import ViewTask from "./viewTask";
 import "../styles/Column.css";
 
-class TaskColumn extends React.Component {
-  state = { showTask: false, task: {} };
+import React, { useState } from "react";
 
-  emptyTask = {
+import ViewTask from "./viewTask";
+
+const TaskColumn = ({
+  onTaskCreate,
+  onTaskDelete,
+  onTaskUpdate,
+  status,
+  statusLabel,
+  tasks
+}) => {
+  const [showTask, setShowTask] = useState(false);
+  const [task, setTask] = useState({});
+
+  const emptyTask = {
     name: "New task",
     estimate: 1,
     description: "",
-    status: this.props.status
+    status
   };
 
-  onViewTask = task => {
-    this.setState({ showTask: true, task: task });
+  const onViewTask = viewTask => {
+    setShowTask(true);
+    setTask(viewTask);
   };
 
-  onCloseTask = () => {
-    this.setState({ showTask: false, task: {} });
+  const onCloseTask = () => {
+    setShowTask(false);
+    setTask({});
   };
 
-  onAddTask = () => {
-    this.setState({ showTask: true, task: Object.assign({}, this.emptyTask) });
+  const handleAddTask = () => {
+    setShowTask(true);
+    setTask(Object.assign({}, emptyTask));
   };
 
-  onChangeTaskVal = changedProps => {
-    this.setState({
-      ...this.state,
-      task: { ...this.state.task, ...changedProps }
-    });
+  const handleChangeTaskVal = changedProps => {
+    setTask({...task, ...changedProps});
   };
 
-  onTaskUpdate = changedProps => {
-    this.onChangeTaskVal(changedProps);
-    this.props.onTaskUpdate(this.state.task);
+  const updateTask = changedProps => {
+    handleChangeTaskVal(changedProps);
+    onTaskUpdate(task);
   };
 
-  render() {
-    const { estimateSum, onTaskCreate, onTaskDelete, statusLabel, tasks } = {
-      ...this.props
-    };
+  const estimateSum = () => {
+    return tasks.reduce((total, task) => {
+      return total + parseInt(task.estimate);
+    }, 0);
+  };
 
-    return (
-      <div>
-        <div className="Column">
-          <div className="ColumnTitle">
-            {statusLabel}: {estimateSum}hs
-          </div>
-          <div>
-            {tasks.map(task => {
-              return (
-                <div
-                  className="ColumnTask"
-                  key={task.id}
-                  onClick={e => this.onViewTask(task)}
-                >
-                  {task.name}
-                </div>
-              );
-            })}
-            <div className="NewTask" onClick={this.onAddTask}>
-              + New Task
-            </div>
+  return (
+    <div>
+      <div className="Column">
+        <div className="ColumnTitle">
+          {statusLabel}: {estimateSum()}hs
+        </div>
+        <div>
+          {tasks.map(task => {
+            return (
+              <div
+                className="ColumnTask"
+                key={task.id}
+                onClick={e => onViewTask(task)}
+              >
+                {task.name}
+              </div>
+            );
+          })}
+          <div className="NewTask" onClick={handleAddTask}>
+            + New Task
           </div>
         </div>
-        {this.state.showTask && (
-          <ViewTask
-            onChangeTaskVal={this.onChangeTaskVal}
-            onCloseTask={this.onCloseTask}
-            onCreate={onTaskCreate}
-            onDelete={onTaskDelete}
-            onUpdate={this.onTaskUpdate}
-            task={this.state.task}
-          />
-        )}
       </div>
-    );
-  }
+      {showTask && (
+        <ViewTask
+          onChangeTaskVal={handleChangeTaskVal}
+          onCloseTask={onCloseTask}
+          onCreate={onTaskCreate}
+          onDelete={onTaskDelete}
+          onUpdate={updateTask}
+          task={task}
+        />
+      )}
+    </div>
+  );
 }
 
 export default TaskColumn;
